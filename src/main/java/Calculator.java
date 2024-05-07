@@ -19,18 +19,24 @@ public class Calculator {
                } else {
                System.out.println("Введите его стоимость через точку в формате рубли.копейки (00.00)");
                scanner.useLocale(Locale.ENGLISH);
-                while (!scanner.hasNextDouble()) {
-                   System.out.println("Вы неверно ввели стоимость. Введите в формате рубли.копейки");
-                   scanner.nextLine(); // Очищаем неправильный ввод
+                while (true) {
+                        if (scanner.hasNextDouble()) {
+                            price = scanner.nextDouble();
+                            if (price >= 0) {
+                                productsList.add(new Product(name, price));
+                                System.out.printf(String.format("Товар %s успешно добавлен, цена  %.2f\n", name, price));
+                                System.out.println("Добавьте еще товар. Или введите команду Завершить");
+                                name = scanner.nextLine();
+                                break;
+                            } else {
+                                System.out.println("Вы ввели отрицательную стоимость. Введите в формате рубли.копейки (00.00)");
+                                name = scanner.nextLine(); // Очищаем неправильный ввод
+                            }
+                        } else {
+                            System.out.println("Вы неверно ввели стоимость. Введите в формате рубли.копейки (00.00)");
+                            scanner.nextLine(); // Очищаем неправильный ввод
+                        }
                }
-
-               price = scanner.nextDouble();
-               productsList.add(new Product(name, price));
-
-               System.out.printf(String.format("Товар %s успешно добавлен, цена  %.2f\n", name, price));
-               System.out.println("Добавьте еще товар. Или введите команду Завершить");
-               name = scanner.nextLine();
-
            }
        }
    }
